@@ -66,13 +66,13 @@ xml.on('endElement: page', (page) => {
 
 	let ruby = '';
 	if (title.match(/^[\p{Script_Extensions=Hiragana}\p{Script_Extensions=Katakana}・=＝]+$/u)) {
-		ruby = hiraganize(title.replace(/[・=＝]/g, ''));
+		ruby = hiraganize(title.replace(/[・、。･「」〉〈』『【〕〔】》《゠〃=＝]/g, ''));
 	} else {
 		const matches = plainText.split(/[。\n]/)[0].match(/[(（](.+?)[)）]/);
 		if (matches) {
 			const tempRuby = hiraganize(matches[1].split(/[、､，,]/)[0].replace(/\s/g, ''));
-			if (tempRuby.match(/^[\p{Script_Extensions=Hiragana}・]+$/u)) {
-				ruby = tempRuby.replace(/・/ug, '');
+			if (tempRuby.match(/^[\p{Script_Extensions=Hiragana}・=＝]+$/u)) {
+				ruby = tempRuby.replace(/[・、。･「」〉〈』『【〕〔】》《゠〃]/g, '');
 			}
 		}
 	}

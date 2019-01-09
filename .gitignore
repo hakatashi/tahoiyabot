@@ -62,3 +62,9 @@ typings/
 
 *.bz2
 *.tsv
+*.txt
+*.gz
+*.xz
+
+seq2seq
+subword-nmt
