@@ -19,3 +19,11 @@ tail -n 3000 entries.src.txt > dev.src.txt
 head -n -3000 entries.dst.tok.bpe.32000.txt > train.dst.tok.bpe.32000.txt
 tail -n 3000 entries.dst.tok.bpe.32000.txt > dev.dst.tok.bpe.32000.txt
 ```
+
+```
+./subword-nmt/subword_nmt/learn_bpe.py -s 8000 < entries.dst.tok.txt > entries.dst.tok.bpe.8000.bpe.txt
+./subword-nmt/subword_nmt/apply_bpe.py -c entries.dst.tok.bpe.8000.bpe.txt < entries.dst.tok.txt > entries.dst.tok.bpe.8000.txt
+./seq2seq/bin/tools/generate_vocab.py < entries.dst.tok.bpe.8000.txt | grep -vw UNK > entries.dst.tok.bpe.8000.vocab.txt
+head -n -3000 entries.dst.tok.bpe.8000.txt > train.dst.tok.bpe.8000.txt
+tail -n 3000 entries.dst.tok.bpe.8000.txt > dev.dst.tok.bpe.8000.txt
+```
