@@ -65,6 +65,3 @@ typings/
 *.txt
 *.gz
 *.xz
-
-seq2seq
-subword-nmt
