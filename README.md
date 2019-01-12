@@ -27,3 +27,12 @@ tail -n 3000 entries.dst.tok.bpe.32000.txt > dev.dst.tok.bpe.32000.txt
 head -n -3000 entries.dst.tok.bpe.8000.txt > train.dst.tok.bpe.8000.txt
 tail -n 3000 entries.dst.tok.bpe.8000.txt > dev.dst.tok.bpe.8000.txt
 ```
+
+```
+wget http://compling.hss.ntu.edu.sg/wnja/data/1.1/wnjpn-all.tab.gz
+wget http://compling.hss.ntu.edu.sg/wnja/data/1.1/wnjpn-def.tab.gz
+gzip -d wnjpn-all.tab.gz
+gzip -d wnjpn-def.tab.gz
+paste wnjpn-all.tab <(cat wnjpn-all.tab | cut -f 2 | mecab -Oyomi) > wnjpn-all-ruby.tsv
+node generate-wordnet.js
+```

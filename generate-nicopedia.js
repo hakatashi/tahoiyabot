@@ -29,6 +29,7 @@ const normalizeMeaning = (input) => {
 	meaning = meaning.replace(/であり、.+$/, '');
 	meaning = meaning.replace(/であるが、.+$/, '');
 	meaning = meaning.replace(/で、.+$/, '');
+	meaning = meaning.replace(/のこと(?!わざ).+$/, '');
 	meaning = meaning.replace(/^== (.+?) ==$/g, '$1');
 	meaning = meaning.replace(/。[^」』].*$/, '');
 	meaning = meaning.replace(/^\*/, '');
@@ -105,7 +106,7 @@ const normalizeMeaning = (input) => {
 
 			let normalizedBody = leadingLines[normalizedBodyIndex];
 
-			if (normalizedBody.match(/(以下の|以下を|次のこと|次の事|次の意味|下記|とは.{,2}$)/)) {
+			if (normalizedBody.match(/(以下の|以下を|次のこと|次の事|次の意味|下記|とは.{,3}$)/)) {
 				normalizedBody = 'とは、' + (lines.slice(normalizedBodyIndex + 1).find((line) => line.trim().startsWith('* ')) || '')
 					.trim()
 					.slice(2)
