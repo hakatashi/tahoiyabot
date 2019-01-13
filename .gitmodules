@@ -4,3 +4,6 @@
 [submodule "subword-nmt"]
 	path = subword-nmt
 	url = https://github.com/rsennrich/subword-nmt
+[submodule "mecab-ipadic-neologd"]
+	path = mecab-ipadic-neologd
+	url = https://github.com/neologd/mecab-ipadic-neologd.git
