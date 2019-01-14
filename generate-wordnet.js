@@ -48,15 +48,24 @@ let counter = 0;
 			if (meanings.has(id)) {
 				const meaning = meanings.get(id).replace(/（.+?）/g, '');
 				const normalizedRuby = hiraganize(ruby);
-				if (normalizedRuby.match(/^[\p{Script=Hiragana}ー]+$/u)) {
-					if (!meaning.match(/[のる]$/)) {
-						writer.write([id, word, normalizedRuby, meaning].join('\t') + '\n');
-						counter++;
-						if (counter % 1000 === 0) {
-							console.log(`Extracted ${counter} entries`);
-						}
-					}
-					meanings.delete(id);
+				if (!normalizedRuby.match(/^[\p{Script=Hiragana}ー]+$/u)) {
+					return;
+				}
+
+				meanings.delete(id);
+
+				if (meaning.match(/[\p{Script=Hiragana}ー]$/u) && !meaning.endsWith('こと')) {
+					return;
+				}
+
+				if (meaning.includes(':：')) {
+					return;
+				}
+
+				writer.write([word, normalizedRuby, meaning].join('\t') + '\n');
+				counter++;
+				if (counter % 1000 === 0) {
+					console.log(`Extracted ${counter} entries`);
 				}
 			}
 		});

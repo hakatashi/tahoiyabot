@@ -43,3 +43,14 @@ tar caf pixpedia.tar.gz download
 node generate-pixpedia.js pixpedia.tar.gz
 paste <(cut pixpedia-entries-raw.tsv -f 1) <(cut pixpedia-entries-raw.tsv -f 1 | sed 's/(.\+\?)//g' | mecab -Oyomi -d `mecab-config --dicdir`/mecab-ipadic-neologd) <(cut pixpedia-entries-raw.tsv -f 2) > pixpedia-entries.tsv
 ```
+
+```sh
+cp ../slackbot/tahoiya/ascii.txt ascii-entries.tsv
+cp ../slackbot/tahoiya/binary.txt binary-entries.tsv
+cp ../slackbot/tahoiya/ewords.txt ewords-entries.tsv
+cp ../slackbot/tahoiya/fideli.txt fideli-entries.tsv
+cat entries.tsv *-entries.tsv > entries-all.tsv
+cut entries-all.tsv -f 3 | tr ' ' _ > meanings.txt
+./seq2seq/bin/tools/generate_vocab.py < meanings.txt | head -n 1000 | cut -f 1 > excludes.txt
+node filter-entries.js excludes.txt entries-all.tsv
+```

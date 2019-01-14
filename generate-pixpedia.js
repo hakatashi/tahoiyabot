@@ -55,6 +55,11 @@ const normalizeMeaning = (input) => {
 			return;
 		}
 		stream.pipe(concat((data) => {
+			if (data.length === 0) {
+				done();
+				return;
+			}
+
 			const {articles} = JSON.parse(data);
 			for (const article of articles) {
 				const firstLine = article.summary.split(/\r?\n/)[0];
