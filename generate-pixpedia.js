@@ -42,9 +42,11 @@ const normalizeMeaning = (input) => {
 	meaning = meaning.replace(/。[^」』].*$/, '');
 	meaning = meaning.replace(/^\*/, '');
 	meaning = meaning.replace(/^[\d０-９][\.．\s]/, '');
-	meaning = meaning.trim().replace(/(のこと|をいう|である|を指す|とされる|、|。)+$/, '');
+	meaning = meaning.trim().replace(/(のこと|の事|をいう|である|を指す|とされる|、|。)+$/, '');
 	return meaning.trim();
 };
+
+const articlesSet = new Set();
 
 (async () => {
 	let counter = 0;
@@ -62,6 +64,10 @@ const normalizeMeaning = (input) => {
 
 			const {articles} = JSON.parse(data);
 			for (const article of articles) {
+				if (articlesSet.has(article.tag_name)) {
+					continue;
+				}
+
 				const firstLine = article.summary.split(/\r?\n/)[0];
 
 				const meaning = normalizeMeaning(firstLine);
@@ -74,6 +80,7 @@ const normalizeMeaning = (input) => {
 					article.tag_name,
 					meaning,
 				].join('\t') + '\n');
+				articlesSet.add(article.tag_name);
 
 				counter++;
 				if (counter % 1000 === 0) {

@@ -34,5 +34,8 @@ const genres = ['アニメ', 'マンガ', 'ラノベ', 'ゲーム', 'フィギ�
 			articleSize = articles.length;
 		}
 	}
+
+	console.log('finished.');
+	await new Promise((resolve) => setTimeout(resolve, 1e8))
 })();
 

@@ -34,7 +34,12 @@ const forbiddenSuffix = [
 	'人物',
 	'町村',
 	'!',
+	'！',
 	'?',
+	'？',
+	'」',
+	'』',
+	'】',
 	'タグ',
 	'ボクサー',
 	'文学者',
@@ -152,6 +157,9 @@ const forbiddenSuffix = [
 	'主唱者',
 	'支持者',
 	'独裁者',
+	'キャラ',
+	'企画',
+	'当主',
 ];
 
 const forbiddenSuffixRegex = new RegExp(`(${forbiddenSuffix.map((s) => escapeRegExp(s)).join('|')})(の1つ|の１つ|のひとつ|の一つ|の一人|のひとり|の1人|の１人|の一種|の1種|の１種)?$`);
@@ -164,6 +172,12 @@ const forbiddenInfix = [
 	'読んで字の如く',
 	'に登場する',
 	'カップリング',
+	'曖昧さ回避',
+	'重複記事',
+	'pixiv',
+	'Pixiv',
+	'ピクシブ',
+	'お絵カキコ',
 ];
 
 const forbiddenInfixRegex = new RegExp(`(${forbiddenInfix.map((s) => escapeRegExp(s)).join('|')})`);
@@ -191,7 +205,7 @@ const forbiddenInfixRegex = new RegExp(`(${forbiddenInfix.map((s) => escapeRegEx
 			return;
 		}
 
-		const normalizedRuby = hiraganize(ruby).replace(/[・=「」【】［］『』()、。]/g, '');
+		const normalizedRuby = hiraganize(ruby).replace(/[・･＝=「」【】［］『』()、。!?！？]/g, '');
 
 		if (normalizedRuby.length > 20 || normalizedRuby.length === 0 || !normalizedRuby.match(/^[\p{Script=Hiragana}ー]+$/u)) {
 			return;
