@@ -42,12 +42,16 @@ const normalizeMeaning = (input) => {
 	}
 	meaning = meaning.replace(/であり、.+$/, '');
 	meaning = meaning.replace(/であるが、.+$/, '');
-	meaning = meaning.replace(/で、.+$/, '');
+	meaning = meaning.replace(/のこと(?!わざ).+$/, '');
+	meaning = meaning.replace(/を指す.+$/, '');
 	meaning = meaning.replace(/^== (.+?) ==$/g, '$1');
 	meaning = meaning.replace(/。.*$/, '');
 	meaning = meaning.replace(/^.+? -/, '');
 	meaning = meaning.replace(/^\*/, '');
-	meaning = meaning.trim().replace(/(のこと|をいう|である|を指す|とされる)+$/, '');
+	meaning = meaning.trim().replace(/(のこと|の事|をいう|である|です|を指す|とされ(る|ます)|とされてい(る|ます)|、|。)+$/, '');
+	meaning = meaning.replace(/(の一つ|のひとつ|の１つ)$/, 'の1つ');
+	meaning = meaning.replace(/(の1人|のひとり|の１人)$/, 'の一人');
+	meaning = meaning.replace(/(の1種|の１種)$/, 'の一種');
 	return meaning.trim();
 };
 

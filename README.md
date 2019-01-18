@@ -53,4 +53,16 @@ cat entries.tsv *-entries.tsv > entries-all.tsv
 cut entries-all.tsv -f 3 | tr ' ' _ > meanings.txt
 ./seq2seq/bin/tools/generate_vocab.py < meanings.txt | head -n 1000 | cut -f 1 > excludes.txt
 node filter-entries.js excludes.txt entries-all.tsv
+shuf entries.filtered.tsv > entries.filtered.scrambled.tsv
+cut -f2 < entries.filtered.scrambled.tsv | sed 's/./& /g' > entries.filtered.src.txt
+cut -f3 < entries.filtered.scrambled.tsv > entries.filtered.dst.txt
+mecab -Owakati -d `mecab-config --dicdir`/mecab-ipadic-neologd < entries.filtered.dst.txt > entries.filtered.dst.tok.txt
+./subword-nmt/subword_nmt/learn_bpe.py -s 32000 < entries.filtered.dst.tok.txt > entries.filtered.dst.tok.bpe.32000.bpe.txt
+./subword-nmt/subword_nmt/apply_bpe.py -c entries.filtered.dst.tok.bpe.32000.bpe.txt < entries.filtered.dst.tok.txt > entries.filtered.dst.tok.bpe.32000.txt
+./seq2seq/bin/tools/generate_vocab.py < entries.filtered.dst.tok.bpe.32000.txt | grep -vw UNK > entries.filtered.dst.tok.bpe.32000.vocab.txt
+./seq2seq/bin/tools/generate_vocab.py < entries.filtered.src.txt > entries.filtered.src.vocab.txt
+head -n -2000 entries.filtered.src.txt > train.filtered.src.txt
+tail -n 2000 entries.filtered.src.txt > dev.filtered.src.txt
+head -n -2000 entries.filtered.dst.tok.bpe.32000.txt > train.filtered.dst.tok.bpe.32000.txt
+tail -n 2000 entries.filtered.dst.tok.bpe.32000.txt > dev.filtered.dst.tok.bpe.32000.txt
 ```
