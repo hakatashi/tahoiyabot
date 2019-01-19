@@ -22,6 +22,7 @@ const forbiddenSuffix = [
 	'プロデューサー',
 	'競走馬',
 	'基礎自治体',
+	'コマルカ',
 	'ムニシピオ',
 	'コムーネ',
 	'コミューン',
@@ -31,9 +32,8 @@ const forbiddenSuffix = [
 	'俳優',
 	'の山',
 	'番組',
-	'コムーネ',
-	'コミューン',
 	'地名',
+	'町名',
 	'キャラクター',
 	'人物',
 	'町村',
@@ -94,6 +94,8 @@ const forbiddenSuffix = [
 	'アニメ作品',
 	'公卿',
 	'登場人物',
+	'主人公',
+	'ヒロイン',
 	'楽曲',
 	'警察署',
 	'消防署',
@@ -165,6 +167,7 @@ const forbiddenSuffix = [
 	'企画',
 	'当主',
 	'十年紀',
+	'世紀',
 	'平年',
 	'ではない',
 	'ミュージシャン',
@@ -224,15 +227,22 @@ const forbiddenSuffix = [
 	'携帯電話端末',
 	'が存在する',
 	'ます',
+	'まとめサイト',
+	'投手',
+	'審判員',
+	'の数',
+	'参照',
 ];
 
-const forbiddenSuffixRegex = new RegExp(`(?:${forbiddenSuffix.map((s) => escapeRegExp(s)).join('|')})(?:の1つ|の１つ|のひとつ|の一つ|の一人|のひとり|の1人|の１人|の一種|の1種|の１種|の名前|の名称)?$`);
+const forbiddenSuffixRegex = new RegExp(`(?:${forbiddenSuffix.map((s) => escapeRegExp(s)).join('|')})(?:の1つ|の１つ|のひとつ|の一つ|の一人|のひとり|の1人|の１人|の一種|の1種|の１種|の名前|の名称)+?$`);
 
 const forbiddenInfix = [
 	'表記',
 	'以下の',
 	'削除しました',
 	'作成ミス',
+	'白紙化',
+	'この記事',
 	'読んで字の如く',
 	'に登場する',
 	'カップリング',
@@ -245,6 +255,7 @@ const forbiddenInfix = [
 	'荒らし',
 	'歌ってみた',
 	'踊ってみた',
+	'Історія',
 ];
 
 const forbiddenInfixRegex = new RegExp(`(?:${forbiddenInfix.map((s) => escapeRegExp(s)).join('|')})`);
