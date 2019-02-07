@@ -46,7 +46,6 @@ const forbiddenSuffix = [
 	'】',
 	'タグ',
 	'ボクサー',
-	'文学者',
 	'指揮者',
 	'神社',
 	'歌手',
@@ -232,9 +231,38 @@ const forbiddenSuffix = [
 	'審判員',
 	'の数',
 	'参照',
+	'レースクイーン',
+	'レフェリー',
+	'僧',
+	'貴族',
+	'写真家',
+	'映画監督',
+	'経営者',
+	'研究者',
+	'調教師',
+	'キャスター',
+	'リポーター',
+	'アクター',
+	'君主',
+	'文人',
+	'郷士',
+	'ギタリスト',
+	'コメンテーター',
+	'コメンテータ',
+	'地級市',
+	'翻訳者',
+	'ソーシャライト',
+	'長官',
+	'レーサー',
+	'コーチ',
+	'組員',
+	'皇女',
+	'判事',
+	'議員',
+	'長男',
 ];
 
-const forbiddenSuffixRegex = new RegExp(`(?:${forbiddenSuffix.map((s) => escapeRegExp(s)).join('|')})(?:の1つ|の１つ|のひとつ|の一つ|の一人|のひとり|の1人|の１人|の一種|の1種|の１種|の名前|の名称)+?$`);
+const forbiddenSuffixRegex = new RegExp(`(?:${forbiddenSuffix.map((s) => escapeRegExp(s)).join('|')})(?:の1つ|の１つ|のひとつ|の一つ|の一人|のひとり|の1人|の１人|の一種|の1種|の１種|の名前|の名称)*$`);
 
 const forbiddenInfix = [
 	'表記',
@@ -256,6 +284,7 @@ const forbiddenInfix = [
 	'歌ってみた',
 	'踊ってみた',
 	'Історія',
+	'本社を置く',
 ];
 
 const forbiddenInfixRegex = new RegExp(`(?:${forbiddenInfix.map((s) => escapeRegExp(s)).join('|')})`);
