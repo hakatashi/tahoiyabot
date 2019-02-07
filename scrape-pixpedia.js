@@ -16,7 +16,7 @@ const genres = ['アニメ', 'マンガ', 'ラノベ', 'ゲーム', 'フィギ�
 			page++;
 			const filename = `${genre}-${page.toString().padStart(5, '0')}.json`;
 			const exists = await new Promise((resolve) => {
-				promisify(fs.access)(path.join('download', filename), fs.constants.F_OK, (error) => {
+				promisify(fs.access)(path.join('download', 'pixpedia', filename), fs.constants.F_OK, (error) => {
 					resolve(!error);
 				});
 			});
