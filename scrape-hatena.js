@@ -13,7 +13,7 @@ const iconv = require('iconv-lite');
 		});
 	});
 	if (!exists) {
-		await download('http://d.hatena.ne.jp/images/keyword/keywordlist_furigana_with_kid.csv', 'keywordlist_furigana_with_kid.csv');
+		await download('http://d.hatena.ne.jp/images/keyword/keywordlist_furigana_with_kid.csv', __dirname);
 	}
 
 	const keywordlist = await promisify(fs.readFile)('keywordlist_furigana_with_kid.csv');
