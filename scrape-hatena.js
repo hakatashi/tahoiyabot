@@ -3,7 +3,7 @@ const qs = require('querystring');
 const fs = require('fs');
 const path = require('path');
 const {promisify} = require('util');
-const {uniq} = require('lodash');
+const {uniq, shuffle} = require('lodash');
 const iconv = require('iconv-lite');
 
 (async () => {
@@ -17,7 +17,7 @@ const iconv = require('iconv-lite');
 	}
 
 	const keywordlist = await promisify(fs.readFile)('keywordlist_furigana_with_kid.csv');
-	const keywords = uniq(iconv.decode(keywordlist, 'euc-jp').split('\n').map((line) => line.split('\t')[1]));
+	const keywords = shuffle(uniq(iconv.decode(keywordlist, 'euc-jp').split('\n').map((line) => line.split('\t')[1])));
 
 	for (const keyword of keywords) {
 		const filename = `${keyword.replace(/[/\\?%*:|"<>]/g, '_')}.xml`;
