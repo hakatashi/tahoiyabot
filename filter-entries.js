@@ -104,11 +104,9 @@ const forbiddenSuffix = [
 	'皇族',
 	'自治体',
 	'女優',
-	'武士',
 	'大名',
 	'モデル',
 	'ライター',
-	'弁護士',
 	'大字',
 	'団体',
 	'ユニット',
@@ -127,7 +125,6 @@ const forbiddenSuffix = [
 	'ピアニスト',
 	'エッセイスト',
 	'町字',
-	'博士',
 	'教授',
 	'項目',
 	'都市',
@@ -201,13 +198,10 @@ const forbiddenSuffix = [
 	'アニメーター',
 	'郵便局',
 	'野球場',
-	'博物館',
-	'美術館',
 	'商業施設',
 	'公園',
 	'の城',
 	'温泉',
-	'力士',
 	'スタジアム',
 	'サッカークラブ',
 	'記述する',
@@ -245,7 +239,6 @@ const forbiddenSuffix = [
 	'アクター',
 	'君主',
 	'文人',
-	'郷士',
 	'ギタリスト',
 	'コメンテーター',
 	'コメンテータ',
@@ -260,6 +253,76 @@ const forbiddenSuffix = [
 	'判事',
 	'議員',
 	'長男',
+	'生まれ',
+	'ジャンクション',
+	'プランナー',
+	'父',
+	'会長',
+	'チーム',
+	'所在地',
+	'グループ',
+	'別称',
+	'川',
+	'喫茶店',
+	'島',
+	'宿場',
+	'藩',
+	'コングロマリット',
+	'地下街',
+	'峠',
+	'庭園',
+	'バス',
+	'衛星',
+	'惑星',
+	'湖',
+	'運河',
+	'属',
+	'人名',
+	'カメラ',
+	'ブランド',
+	'県級市',
+	'都',
+	'多年草',
+	'鳥',
+	'作物',
+	'類',
+	'貝',
+	'植物',
+	'動物',
+	'俳人',
+	'士官',
+	'組織',
+	'言語',
+	'意味する語',
+	'魚',
+	'放送局',
+	'港湾',
+	'自動車',
+	'山',
+	'予備校',
+	'魚',
+	'館',
+	'技師',
+	'士',
+	'バラエティ',
+	'ショップ',
+	'テーマパーク',
+	'チェーン',
+	'事業者',
+	'シリーズ',
+	'アニメ',
+	'遊園地',
+	'皇帝',
+	'綱',
+	'艇',
+	'分子',
+	'化合物',
+	'区',
+	'プロモーター',
+	'山地',
+	'首長',
+	'料理店',
+	'木',
 ];
 
 const forbiddenSuffixRegex = new RegExp(`(?:${forbiddenSuffix.map((s) => escapeRegExp(s)).join('|')})(?:の1つ|の１つ|のひとつ|の一つ|の一人|のひとり|の1人|の１人|の一種|の1種|の１種|の名前|の名称)*$`);
@@ -285,6 +348,7 @@ const forbiddenInfix = [
 	'踊ってみた',
 	'Історія',
 	'本社を置く',
+	'英文表記',
 ];
 
 const forbiddenInfixRegex = new RegExp(`(?:${forbiddenInfix.map((s) => escapeRegExp(s)).join('|')})`);
@@ -312,7 +376,7 @@ const normalizeMeaning = (input) => {
 		max_limit_on_data_read: 1e6,
 		skip_lines_with_error: true,
 	});
-	const writer = fs.createWriteStream('entries.filtered.tsv');
+	const writer = process.stdout;
 
 	reader.pipe(parser);
 
@@ -329,11 +393,11 @@ const normalizeMeaning = (input) => {
 
 		const meaning = normalizeMeaning(rawMeaning);
 
-		if (meaning.length <= 3) {
+		if (meaning.length <= 3 || meaning.match(/^[a-z \-.,]+$/i)) {
 			return;
 		}
 
-		if (meaning.match(/^(?:グレゴリオ暦で)/)) {
+		if (meaning.match(/^(?:グレゴリオ暦で|http|大韓民国の)/)) {
 			return;
 		}
 
