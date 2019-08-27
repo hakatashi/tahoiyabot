@@ -13,7 +13,7 @@ const loadPage = async (page) => {
 		return fs.readJson(cachePath);
 	}
 
-	consnole.log(`Downloading search result page = ${page}`);
+	console.log(`Downloading search result page = ${page}`);
 
 	const {data: {songs}} = await scrapeIt(`https://www.uta-net.com/search/?${qs.encode({
 		Aselect: 2,
@@ -52,7 +52,7 @@ const loadPage = async (page) => {
 
 	await fs.outputJson(cachePath, songs);
 
-	consnole.log(`Downloaded ${songs.length} songs`);
+	console.log(`Downloaded ${songs.length} songs`);
 
 	return songs;
 }
