@@ -13,6 +13,7 @@ const loadPage = async (page) => {
 		return fs.readJson(cachePath);
 	}
 
+	await new Promise((resolve) => setTimeout(resolve, 15000));
 	console.log(`Downloading search result page = ${page}`);
 
 	const {data: {songs}} = await scrapeIt(`https://www.uta-net.com/search/?${qs.encode({
