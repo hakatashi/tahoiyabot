@@ -87,6 +87,8 @@ const loadPage = async (page) => {
 			const buffer = await download(url);
 			await fs.outputFile(filename, buffer);
 		}
+
+		page++;
 	}
 
 	console.log('finished.');
